@@ -28,13 +28,30 @@ Java, Spring boot, JPA, JUnit, REST
 - POST/recruitment
 
 #### RequstBody 
-- {}
+- {title : 제목, 
+companyNo : 회사 pk, 
+career : 경력, 
+degree : 학력, 
+salary : 급여, 
+detail : 상세정보, 
+endDate : 마감일}
+
+#### ResponseBody
+- {title : 제목, 
+career : 경력, 
+degree : 학력, 
+salary : 급여, 
+detail : 상세정보, 
+endDate : 마감일, 
+companyName : 회사 이름, 
+homePage: 홈페이지, 
+address : 근무지 주소}
 
 #### content type 
 - application/json
 
 #### Link 
-- 
+- https://velog.io/@rladmswjd119/%ED%94%84%EB%A6%AC%EC%98%A8%EB%B3%B4%EB%94%A9-%EB%B0%B1%EC%97%94%EB%93%9C-%EC%9D%B8%ED%84%B4%EC%8B%AD-%EC%84%A0%EB%B0%9C%EA%B3%BC%EC%A0%9C-REST-API-Link
 
 ### 예외 상황 및 처리
 - 필수 작성 값 누락시 예외 발생
@@ -58,13 +75,29 @@ Java, Spring boot, JPA, JUnit, REST
 - PUT/recruitment/{no}
 
 #### RequstBody 
-- {}
+- {title : 제목, 
+career : 경력, 
+degree : 학력, 
+salary : 급여, 
+detail : 상세정보, 
+endDate : 마감일}
+
+#### ResponseBody
+- {title : 제목, 
+career : 경력, 
+degree : 학력, 
+salary : 급여, 
+detail : 상세정보, 
+endDate : 마감일, 
+companyName : 회사 이름, 
+homePage: 홈페이지, 
+address : 근무지 주소}
 
 #### content type 
 - application/json
 
 #### Link 
-- 
+- https://velog.io/@rladmswjd119/%ED%94%84%EB%A6%AC%EC%98%A8%EB%B3%B4%EB%94%A9-%EB%B0%B1%EC%97%94%EB%93%9C-%EC%9D%B8%ED%84%B4%EC%8B%AD-%EC%84%A0%EB%B0%9C%EA%B3%BC%EC%A0%9C-REST-API-Link
 
 ### 예외 상황 및 처리
 - 필수 작성 값 누락시 예외 발생
@@ -87,13 +120,13 @@ Java, Spring boot, JPA, JUnit, REST
 - DELETE/recruitment/{no}
 
 #### RequstBody 
-- {}
+- {no: 채용공고 pk}
 
 #### content type 
 - application/json
 
 #### Link 
-- 
+- https://velog.io/@rladmswjd119/%ED%94%84%EB%A6%AC%EC%98%A8%EB%B3%B4%EB%94%A9-%EB%B0%B1%EC%97%94%EB%93%9C-%EC%9D%B8%ED%84%B4%EC%8B%AD-%EC%84%A0%EB%B0%9C%EA%B3%BC%EC%A0%9C-REST-API-Link
 
 ### 예외 상황 및 처리
 - 삭제하고자 하는 채용공고 조회 실패시 예외 발생
@@ -114,14 +147,16 @@ Java, Spring boot, JPA, JUnit, REST
 #### URI 
 - GET/all-recruitment
 
-#### RequstBody 
-- {}
+#### ResponseBody 
+- {title : 제목, 
+name : 회사 이름, 
+career : 경력}
 
 #### content type 
 - application/json
 
 #### Link 
-- 
+- https://velog.io/@rladmswjd119/%ED%94%84%EB%A6%AC%EC%98%A8%EB%B3%B4%EB%94%A9-%EB%B0%B1%EC%97%94%EB%93%9C-%EC%9D%B8%ED%84%B4%EC%8B%AD-%EC%84%A0%EB%B0%9C%EA%B3%BC%EC%A0%9C-REST-API-Link
 
 ### 예외 상황 및 처리
 - 채용 공고가 존재하지 않을시 예외 발생
@@ -142,13 +177,18 @@ Java, Spring boot, JPA, JUnit, REST
 - GET/recruitment/title={%search%}
 
 #### RequstBody 
-- {}
+- {keyword: 제목 키워드, career: 경력, degree: 학력, address: 지역}
+
+#### ResponseBody
+- {title : 제목, 
+name : 회사 이름, 
+career : 경력}
 
 #### content type 
 - application/json
 
 #### Link 
-- 
+- https://velog.io/@rladmswjd119/%ED%94%84%EB%A6%AC%EC%98%A8%EB%B3%B4%EB%94%A9-%EB%B0%B1%EC%97%94%EB%93%9C-%EC%9D%B8%ED%84%B4%EC%8B%AD-%EC%84%A0%EB%B0%9C%EA%B3%BC%EC%A0%9C-REST-API-Link
 
 ### 예외 상황 및 처리
 - 공백 혹은 null 검색시 에러 발생
@@ -170,13 +210,24 @@ Java, Spring boot, JPA, JUnit, REST
 - GET/recruitment/{no}
 
 #### RequstBody 
-- {}
+- {no: 채용공고 pk}
+
+#### RespnseBody
+- {title : 제목, 
+career : 경력, 
+degree : 학력, 
+salary : 급여, 
+detail : 상세정보, 
+endDate : 마감일, 
+companyName : 회사 이름, 
+homePage: 홈페이지, 
+address : 근무지 주소}
 
 #### content type 
 - application/json
 
 #### Link 
-- 
+- https://velog.io/@rladmswjd119/%ED%94%84%EB%A6%AC%EC%98%A8%EB%B3%B4%EB%94%A9-%EB%B0%B1%EC%97%94%EB%93%9C-%EC%9D%B8%ED%84%B4%EC%8B%AD-%EC%84%A0%EB%B0%9C%EA%B3%BC%EC%A0%9C-REST-API-Link
 
 ### 예외 상황 및 처리
 - 존재하지 않는 채용공고의 상세페이지 조회시 예외 발생
