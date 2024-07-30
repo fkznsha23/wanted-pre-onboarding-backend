@@ -145,7 +145,7 @@ address : 근무지 주소}
 - 채용공고 목록 페이지에는 채용공고의 제목, 회사 이름, 경력, 지역, 포지션, 최종 학력만 표시된다.
 
 #### URI 
-- GET/all-recruitment
+- GET/all-project
 
 #### ResponseBody 
 - {title : 제목, 
