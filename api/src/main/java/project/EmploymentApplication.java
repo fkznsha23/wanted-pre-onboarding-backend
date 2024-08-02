@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @SpringBootApplication
-@EntityScan(basePackages = "inter")
+@EntityScan(basePackages = "entity")
 public class EmploymentApplication {
 
     public static void main(String[] args) {
