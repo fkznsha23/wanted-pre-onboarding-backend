@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -29,6 +30,7 @@ public class JobPostForm {
     private String degree;
     private double salary;
     private String detail;
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
     private LocalDate endDate;
 
     public void checkForm() {

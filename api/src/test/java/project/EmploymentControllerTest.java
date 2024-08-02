@@ -34,13 +34,9 @@ public class EmploymentControllerTest {
         map.add("degree", "학력");
         map.add("salary", 1000000);
         map.add("detail", "상세정보");
-        map.add("endDate", LocalDate.of(2024, 10, 10));
+        map.add("endDate", "2024-10-10");
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(map, headers);
-
-        ResponseEntity<JobPostDetail> result = testRestTemplate.postForEntity("/employment/job-post", request, JobPostDetail.class);
+        ResponseEntity<JobPostDetail> result = testRestTemplate.postForEntity("/employment/job-post", map, JobPostDetail.class);
         JobPostDetail postDetail = result.getBody();
 
         assertThat(postDetail.getTitle()).isEqualTo("제목");
