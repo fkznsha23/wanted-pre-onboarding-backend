@@ -1,11 +1,16 @@
 package entity;
 
 import inter.User;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
+@Entity
 @Getter
+@NoArgsConstructor
 public class Company implements User {
     public Company(String name, String type, String businessDetail, LocalDate establishmentDate, String address, int peopleNum) {
         this.name = name;
@@ -16,6 +21,7 @@ public class Company implements User {
         this.peopleNum = peopleNum;
     }
 
+    @Id
     private int no;
     private String name;
     private String type;
