@@ -20,4 +20,16 @@ public class EmploymentService {
         return employmentRepo.save(post);
     }
 
+    public JobPost getPost(int postNo) {
+        JobPost post = employmentRepo.getJobPostByNo(postNo);
+
+        if(post == null){
+            throw new RuntimeException("조회된 채용공고가 존재하지 않습니다.");
+        }
+
+        return post;
+    }
+
+    public void removePost(int postNo) {
+    }
 }
