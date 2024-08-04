@@ -3,13 +3,13 @@ package project.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
 @Getter
-public class JobPostDetail {
-    public JobPostDetail(int no, String title, String position, String career, String degree, double salary, String detail, LocalDate endDate
-                        , String companyName, String homePage, String address) {
+public class JobPostModifyForm {
+    public JobPostModifyForm(int no, String title, String position, String career, String degree, double salary, String detail, LocalDate endDate) {
         this.no = no;
         this.title = title;
         this.position = position;
@@ -18,9 +18,6 @@ public class JobPostDetail {
         this.salary = salary;
         this.detail = detail;
         this.endDate = endDate;
-        this.companyName = companyName;
-        this.homePage = homePage;
-        this.address = address;
     }
 
     private int no;
@@ -30,8 +27,6 @@ public class JobPostDetail {
     private String degree;
     private double salary;
     private String detail;
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
     private LocalDate endDate;
-    private String companyName;
-    private String homePage;
-    private String address;
 }

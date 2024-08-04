@@ -2,6 +2,8 @@ package entity;
 
 import inter.User;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +24,7 @@ public class Company implements User {
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int no;
     private String name;
     private String type;
