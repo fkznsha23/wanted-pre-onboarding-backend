@@ -31,5 +31,10 @@ public class EmploymentService {
     }
 
     public void removePost(int postNo) {
+        try {
+            employmentRepo.delete(getPost(postNo));
+        } catch (RuntimeException ex) {
+            throw new RuntimeException("삭제할 채용공고가 존재하지 않습니다.");
+        }
     }
 }

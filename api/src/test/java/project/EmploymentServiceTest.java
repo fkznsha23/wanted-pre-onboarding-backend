@@ -75,4 +75,11 @@ public class EmploymentServiceTest {
 
         verify(repo, times(1)).delete(result);
     }
+
+    @Test
+    public void 채용공고_삭제_실패_테스트(){
+        Throwable ex = assertThrows(RuntimeException.class, () -> service.removePost(anyInt()));
+
+        assertThat(ex.getMessage()).isEqualTo("삭제할 채용공고가 존재하지 않습니다.");
+    }
 }
