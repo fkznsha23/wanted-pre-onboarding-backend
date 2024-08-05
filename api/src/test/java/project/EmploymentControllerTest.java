@@ -17,6 +17,7 @@ import project.dto.JobSimplePost;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -75,7 +76,7 @@ public class EmploymentControllerTest {
     public void getJobPostListTest(){
         List<JobPostDetail> list = new ArrayList<>();
         list.add(postDetail);
-        for (int i = 0; i < 10; i++) {
+        for (int i = 1; i < 10; i++) {
             MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
             map.add("title", "제목" + i);
             map.add("position", "포지션");
@@ -102,10 +103,13 @@ public class EmploymentControllerTest {
 
     @Test
     public void getJobPostDetailByNoTest() {
-        int no = postDetail.getNo();
-        ResponseEntity<JobPostDetail> postDetail = testRestTemplate.getForEntity("/employment/job-post-detail/" + no, JobPostDetail.class);
+        JobPostDetail detail = postDetail;
+        ResponseEntity<JobPostDetail> postDetail = testRestTemplate.getForEntity("/employment/job-post-detail/" + detail.getNo(), JobPostDetail.class);
         JobPostDetail result = postDetail.getBody();
 
-        assertThat(no).isEqualTo(result.getNo());
+        assertThat(detail.getNo()).isEqualTo(result.getNo());
+        assertThat(detail.getTitle()).isEqualTo(result.getTitle());
+        assertThat(detail.getCareer()).isEqualTo(result.getCareer());
+        assertThat(detail.getCompanyName()).isEqualTo(result.getCompanyName());
     }
 }

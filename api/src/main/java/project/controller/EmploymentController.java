@@ -21,11 +21,7 @@ public class EmploymentController {
 
     @PostMapping("/job-post")
     public JobPostDetail addJobPost(@ModelAttribute JobPostForm form) {
-        JobPost jobPost = emplService.addPost(form);
-        Company company = companyService.getCompany(form.getCompanyNo());
-
-        return new JobPostDetail(jobPost.getNo(), jobPost.getTitle(), jobPost.getPosition(), jobPost.getCareer(), jobPost.getDegree(), jobPost.getSalary(), jobPost.getDetail()
-                                , jobPost.getEndDate(), company.getName(), company.getHomePage(), company.getAddress());
+        return emplService.createJobPostDetail(emplService.addPost(form));
     }
 
     @DeleteMapping("/all-job-post")
@@ -37,18 +33,15 @@ public class EmploymentController {
     public List<JobSimplePost> removeJobPost(int postNo){
         JobPost post = emplService.removePost(postNo);
         List<JobPost> postList = emplService.getAllJobPostByCompanyNo(post.getCompanyNo());
+        List<CompletableFuture<JobSimplePost>> comlList = emplService.changeSimplePost(postList);
+        CompletableFuture<List<JobSimplePost>> simplList = emplService.changeAsync(comlList);
 
-
-        return null;
+        return simplList.join();
     }
 
     @PutMapping("/job-post")
     public JobPostDetail updateJobPost(@ModelAttribute JobPostModifyForm form) {
-        JobPost modifyPost = emplService.updateJobPost(form);
-        Company company = companyService.getCompany(modifyPost.getCompanyNo());
-
-        return new JobPostDetail(modifyPost.getNo(), modifyPost.getTitle(), modifyPost.getPosition(), modifyPost.getCareer(), modifyPost.getDegree(), modifyPost.getSalary()
-                                , modifyPost.getDetail(), modifyPost.getEndDate(), company.getName(), company.getHomePage(), company.getAddress());
+        return emplService.createJobPostDetail(emplService.updateJobPost(form));
     }
 
     @GetMapping("/all-job-post")
@@ -58,5 +51,10 @@ public class EmploymentController {
         CompletableFuture<List<JobSimplePost>> simplPostList = emplService.changeAsync(complList);
 
         return simplPostList.join();
+    }
+
+    @GetMapping("/job-post-detail/{no}")
+    public JobPostDetail getJobPostDetailByNo(@PathVariable int no) {
+        return emplService.createJobPostDetail(emplService.getJobPostByNo(no));
     }
 }

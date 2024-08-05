@@ -100,7 +100,6 @@ public class EmploymentService {
         return CompletableFuture.allOf(complArray).thenApply(i -> complList.stream().map(CompletableFuture::join).collect(Collectors.toList()));
     }
 
-
     public JobPost getJobPostByNo(int no) {
         Optional<JobPost> OptionalPost = employmentRepo.findById(no);
         if(OptionalPost.isEmpty()) {
@@ -108,5 +107,12 @@ public class EmploymentService {
         }
 
         return OptionalPost.get();
+    }
+
+    public JobPostDetail createJobPostDetail(JobPost post) {
+        Company company = companyRepo.getCompanyByNo(post.getCompanyNo());
+
+        return new JobPostDetail(post.getNo(), post.getTitle(), post.getPosition(), post.getCareer(), post.getDegree(), post.getSalary(), post.getDetail(), post.getEndDate()
+                ,company.getName(), company.getHomePage(), company.getAddress());
     }
 }
