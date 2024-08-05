@@ -13,6 +13,7 @@ import project.repository.EmploymentRepo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
@@ -31,13 +32,13 @@ public class EmploymentService {
     }
 
     public JobPost getPost(int postNo) {
-        JobPost post = employmentRepo.getJobPostByNo(postNo);
+        Optional<JobPost> opPost = employmentRepo.findById(postNo);
 
-        if(post == null){
+        if(opPost.isEmpty()){
             throw new RuntimeException("조회된 채용공고가 존재하지 않습니다.");
         }
 
-        return post;
+        return opPost.get();
     }
 
     public JobPost removePost(int postNo) {
@@ -101,7 +102,11 @@ public class EmploymentService {
 
 
     public JobPost getJobPostByNo(int no) {
+        Optional<JobPost> OptionalPost = employmentRepo.findById(no);
+        if(OptionalPost.isEmpty()) {
+            throw new RuntimeException("해당 채용공고의 상세 페이지는 존재하지 않습니다.");
+        }
 
-        return null;
+        return OptionalPost.get();
     }
 }

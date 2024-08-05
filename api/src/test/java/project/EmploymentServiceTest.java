@@ -16,6 +16,7 @@ import project.service.EmploymentService;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -58,11 +59,11 @@ public class EmploymentServiceTest {
     }
     @Test
     public void 채용공고_조회_성공_테스트() {
-        given(repo.getJobPostByNo(anyInt())).willReturn(postValue);
+        given(repo.findById(anyInt())).willReturn(Optional.of(postValue));
 
         JobPost post = service.getPost(anyInt());
 
-        verify(repo, times(1)).getJobPostByNo(anyInt());
+        verify(repo, times(1)).findById(anyInt());
         assertThat(form.getTitle()).isEqualTo(post.getTitle());
     }
 
@@ -101,7 +102,7 @@ public class EmploymentServiceTest {
     public void 채용공고_수정_성공_테스트(){
         ArgumentCaptor<JobPost> modifyCaptor = ArgumentCaptor.forClass(JobPost.class);
 
-        given(repo.getJobPostByNo(anyInt())).willReturn(postValue);
+        given(repo.findById(anyInt())).willReturn(Optional.of(postValue));
         JobPostModifyForm modifyForm = new JobPostModifyForm(postValue.getNo(), "수정된 제목", "수정된 포지션", "커리어", "학력", 100000
                                                             , "수정된 상세정보", mock(LocalDate.class));
 
@@ -109,7 +110,7 @@ public class EmploymentServiceTest {
         verify(repo, times(2)).save(modifyCaptor.capture());
         JobPost modify = modifyCaptor.getValue();
 
-        verify(repo, times(1)).getJobPostByNo(anyInt());
+        verify(repo, times(1)).findById(anyInt());
         assertThat(modify.getTitle()).isEqualTo(modifyForm.getTitle());
         assertThat(modify.getNo()).isEqualTo(modifyForm.getNo());
     }
@@ -153,7 +154,7 @@ public class EmploymentServiceTest {
 
     @Test
     public void 채용공고_상세페이지_조회_성공_테스트() {
-        given(repo.getJobPostByNo(anyInt())).willReturn(postValue);
+        given(repo.findById(anyInt())).willReturn(Optional.of(postValue));
 
         JobPost result = service.getJobPostByNo(1);
 

@@ -72,7 +72,7 @@ public class EmploymentControllerTest {
     }
 
     @Test
-    public void getJobPostList(){
+    public void getJobPostListTest(){
         List<JobPostDetail> list = new ArrayList<>();
         list.add(postDetail);
         for (int i = 0; i < 10; i++) {
@@ -98,5 +98,14 @@ public class EmploymentControllerTest {
             assertThat(list.get(i).getTitle()).isEqualTo(result.get(i).getTitle());
             assertThat(list.get(i).getPosition()).isEqualTo(result.get(i).getPosition());
         }
+    }
+
+    @Test
+    public void getJobPostDetailByNoTest() {
+        int no = postDetail.getNo();
+        ResponseEntity<JobPostDetail> postDetail = testRestTemplate.getForEntity("/employment/job-post-detail/" + no, JobPostDetail.class);
+        JobPostDetail result = postDetail.getBody();
+
+        assertThat(no).isEqualTo(result.getNo());
     }
 }
