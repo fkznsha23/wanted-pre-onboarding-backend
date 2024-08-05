@@ -116,8 +116,13 @@ public class EmploymentService {
                 ,company.getName(), company.getHomePage(), company.getAddress());
     }
 
-    public List<JobPost> getJobPostByWord(String word) {
+    public List<JobPost> getJobPostByWord(String title) {
+        List<JobPost> postList = employmentRepo.findAllByTitleContains(title);
 
-        return null;
+        if(postList.isEmpty()){
+            throw new RuntimeException("검색어에 해당하는 채용공고가 존재하지 않습니다.");
+        }
+
+        return postList;
     }
 }

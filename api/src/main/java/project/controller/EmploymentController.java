@@ -53,8 +53,17 @@ public class EmploymentController {
         return simplPostList.join();
     }
 
-    @GetMapping("/job-post-detail/{no}")
-    public JobPostDetail getJobPostDetailByNo(@PathVariable int no) {
+    @GetMapping("/job-post/{no}")
+    public JobPostDetail getJobPostByNo(@PathVariable int no) {
         return emplService.createJobPostDetail(emplService.getJobPostByNo(no));
+    }
+
+    @GetMapping("/all-job-post/{title}")
+    public List<JobSimplePost> getAllJobPostWordLike(@PathVariable String title) {
+        List<JobPost> postList = emplService.getJobPostByWord(title);
+        List<CompletableFuture<JobSimplePost>> complList = emplService.changeSimplePost(postList);
+        CompletableFuture<List<JobSimplePost>> simplPostList = emplService.changeAsync(complList);
+
+        return simplPostList.join();
     }
 }

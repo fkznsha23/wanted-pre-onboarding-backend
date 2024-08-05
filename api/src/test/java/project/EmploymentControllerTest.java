@@ -102,14 +102,23 @@ public class EmploymentControllerTest {
     }
 
     @Test
-    public void getJobPostDetailByNoTest() {
+    public void getJobPostByNoTest() {
         JobPostDetail detail = postDetail;
-        ResponseEntity<JobPostDetail> postDetail = testRestTemplate.getForEntity("/employment/job-post-detail/" + detail.getNo(), JobPostDetail.class);
+        ResponseEntity<JobPostDetail> postDetail = testRestTemplate.getForEntity("/employment/job-post/" + detail.getNo(), JobPostDetail.class);
         JobPostDetail result = postDetail.getBody();
 
         assertThat(detail.getNo()).isEqualTo(result.getNo());
         assertThat(detail.getTitle()).isEqualTo(result.getTitle());
         assertThat(detail.getCareer()).isEqualTo(result.getCareer());
         assertThat(detail.getCompanyName()).isEqualTo(result.getCompanyName());
+    }
+
+    @Test
+    public void searchJobPostTest(){
+        String word = "제";
+        List<JobSimplePost> simplePostList = testRestTemplate.exchange("/employment/all-job-post/" + word, HttpMethod.GET
+                , null, new ParameterizedTypeReference<List<JobSimplePost>>() {}).getBody();
+
+        assertThat(postDetail.getTitle()).isEqualTo(simplePostList.get(0).getTitle());
     }
 }

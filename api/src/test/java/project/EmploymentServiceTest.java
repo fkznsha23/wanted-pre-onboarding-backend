@@ -174,11 +174,12 @@ public class EmploymentServiceTest {
     public void 채용공고_검색_성공_테스트() {
         List<JobPost> list = new ArrayList<>();
         list.add(postValue);
-        given(repo.findAllByTitleLike(anyString())).willReturn(list);
+        given(repo.findAllByTitleContains(anyString())).willReturn(list);
 
         List<JobPost> result = service.getJobPostByWord("제목");
 
         assertThat(list.size()).isEqualTo(result.size());
+        verify(repo, times(1)).findAllByTitleContains(anyString());
         assertThat(list.get(0).getTitle()).isEqualTo(result.get(0).getTitle());
     }
 
