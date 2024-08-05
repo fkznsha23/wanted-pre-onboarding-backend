@@ -4,14 +4,12 @@ import entity.Company;
 import entity.JobPost;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import project.dto.JobPostDetail;
-import project.dto.JobPostForm;
-import project.dto.JobPostModifyForm;
-import project.dto.JobSimplePost;
+import project.dto.*;
 import project.service.CompanyService;
 import project.service.EmploymentService;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,11 +21,7 @@ public class EmploymentController {
 
     @PostMapping("/job-post")
     public JobPostDetail addJobPost(@ModelAttribute JobPostForm form) {
-        JobPost jobPost = emplService.addPost(form);
-        Company company = companyService.getCompany(form.getCompanyNo());
-
-        return new JobPostDetail(jobPost.getNo(), jobPost.getTitle(), jobPost.getPosition(), jobPost.getCareer(), jobPost.getDegree(), jobPost.getSalary(), jobPost.getDetail()
-                                , jobPost.getEndDate(), company.getName(), company.getHomePage(), company.getAddress());
+        return emplService.createJobPostDetail(emplService.addPost(form));
     }
 
     @DeleteMapping("/all-job-post")
@@ -38,19 +32,38 @@ public class EmploymentController {
     @DeleteMapping("/job-post")
     public List<JobSimplePost> removeJobPost(int postNo){
         JobPost post = emplService.removePost(postNo);
+        List<JobPost> postList = emplService.getAllJobPostByCompanyNo(post.getCompanyNo());
+        List<CompletableFuture<JobSimplePost>> comlList = emplService.changeSimplePost(postList);
+        CompletableFuture<List<JobSimplePost>> simplList = emplService.changeAsync(comlList);
 
-        return emplService.getPostByCompanyNo(post.getCompanyNo());
+        return simplList.join();
     }
 
     @PutMapping("/job-post")
     public JobPostDetail updateJobPost(@ModelAttribute JobPostModifyForm form) {
-        JobPost modifyPost = emplService.updateJobPost(form);
-        Company company = companyService.getCompany(modifyPost.getCompanyNo());
-
-        System.out.println("test" + modifyPost.getTitle());
-
-        return new JobPostDetail(modifyPost.getNo(), modifyPost.getTitle(), modifyPost.getPosition(), modifyPost.getCareer(), modifyPost.getDegree(), modifyPost.getSalary()
-                                , modifyPost.getDetail(), modifyPost.getEndDate(), company.getName(), company.getHomePage(), company.getAddress());
+        return emplService.createJobPostDetail(emplService.updateJobPost(form));
     }
 
+    @GetMapping("/all-job-post")
+    public List<JobSimplePost> getAllJobPost() {
+        List<JobPost> postList = emplService.getAllJobPost();
+        List<CompletableFuture<JobSimplePost>> complList = emplService.changeSimplePost(postList);
+        CompletableFuture<List<JobSimplePost>> simplPostList = emplService.changeAsync(complList);
+
+        return simplPostList.join();
+    }
+
+    @GetMapping("/job-post/{no}")
+    public JobPostDetail getJobPostByNo(@PathVariable int no) {
+        return emplService.createJobPostDetail(emplService.getJobPostByNo(no));
+    }
+
+    @GetMapping("/all-job-post/{title}")
+    public List<JobSimplePost> getAllJobPostWordLike(@PathVariable String title) {
+        List<JobPost> postList = emplService.getJobPostByWord(title);
+        List<CompletableFuture<JobSimplePost>> complList = emplService.changeSimplePost(postList);
+        CompletableFuture<List<JobSimplePost>> simplPostList = emplService.changeAsync(complList);
+
+        return simplPostList.join();
+    }
 }
