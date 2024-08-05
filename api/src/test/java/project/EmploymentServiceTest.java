@@ -135,10 +135,10 @@ public class EmploymentServiceTest {
         JobPost postValue2 = captor2.getValue();
         list.add(postValue2);
 
-        given(repo.getAllJobPost()).willReturn(list);
+        given(repo.findAll()).willReturn(list);
         List<JobPost> postList = service.getAllJobPost();
 
-        verify(repo, times(1)).getAllJobPost();
+        verify(repo, times(1)).findAll();
         assertThat(list.size()).isEqualTo(postList.size());
         assertThat(postList.get(0).getTitle()).isEqualTo(postValue.getTitle());
         assertThat(postList.get(1).getTitle()).isEqualTo(postValue2.getTitle());

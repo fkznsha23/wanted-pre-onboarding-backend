@@ -4,14 +4,12 @@ import entity.Company;
 import entity.JobPost;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import project.dto.JobPostDetail;
-import project.dto.JobPostForm;
-import project.dto.JobPostModifyForm;
-import project.dto.JobSimplePost;
+import project.dto.*;
 import project.service.CompanyService;
 import project.service.EmploymentService;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequiredArgsConstructor
@@ -49,10 +47,16 @@ public class EmploymentController {
         JobPost modifyPost = emplService.updateJobPost(form);
         Company company = companyService.getCompany(modifyPost.getCompanyNo());
 
-        System.out.println("test" + modifyPost.getTitle());
-
         return new JobPostDetail(modifyPost.getNo(), modifyPost.getTitle(), modifyPost.getPosition(), modifyPost.getCareer(), modifyPost.getDegree(), modifyPost.getSalary()
                                 , modifyPost.getDetail(), modifyPost.getEndDate(), company.getName(), company.getHomePage(), company.getAddress());
     }
 
+    @GetMapping("/all-job-post")
+    public List<JobSimplePost> getAllJobPost() {
+        List<JobPost> postList = emplService.getAllJobPost();
+        List<CompletableFuture<JobSimplePost>> complList = emplService.changeSimplePost(postList);
+        CompletableFuture<List<JobSimplePost>> simplPostList = emplService.changeAsync(complList);
+
+        return simplPostList.join();
+    }
 }
