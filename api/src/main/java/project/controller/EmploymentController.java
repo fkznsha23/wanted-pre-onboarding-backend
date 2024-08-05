@@ -38,8 +38,10 @@ public class EmploymentController {
     @DeleteMapping("/job-post")
     public List<JobSimplePost> removeJobPost(int postNo){
         JobPost post = emplService.removePost(postNo);
+        List<JobPost> postList = emplService.getAllJobPostByCompanyNo(post.getCompanyNo());
 
-        return emplService.getPostByCompanyNo(post.getCompanyNo());
+
+        return null;
     }
 
     @PutMapping("/job-post")

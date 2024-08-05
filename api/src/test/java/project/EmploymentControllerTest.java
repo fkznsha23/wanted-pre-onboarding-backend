@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import project.dto.JobPostDetail;
-import project.service.EmploymentService;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,9 +19,6 @@ public class EmploymentControllerTest {
 
     @Autowired
     private TestRestTemplate testRestTemplate;
-
-    @Autowired
-    private EmploymentService emplService;
 
     private MultiValueMap<String, Object> map;
 
@@ -72,5 +68,10 @@ public class EmploymentControllerTest {
         System.out.println(update.getNo());
 
         assertThat(postDetail.getNo()).isEqualTo(update.getNo());
+    }
+
+    @Test
+    public void getJobPostList(){
+
     }
 }

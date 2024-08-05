@@ -47,11 +47,6 @@ public class EmploymentService {
         employmentRepo.deleteAll();
     }
 
-    public List<JobSimplePost> getPostByCompanyNo(int companyNo) {
-
-        return null;
-    }
-
     public JobPost updateJobPost(JobPostModifyForm modifyForm) {
         try {
             JobPost modifyPost = getPost(modifyForm.getNo());
@@ -62,5 +57,19 @@ public class EmploymentService {
         }catch (RuntimeException ex) {
             throw new RuntimeException("수정할 채용공고가 존재하지 않습니다.");
         }
+    }
+
+    public List<JobPost> getAllJobPost() {
+        List<JobPost> postList = employmentRepo.getAllJobPost();
+        if(postList.isEmpty()){
+            throw new RuntimeException("조회된 채용공고가 존재하지 않습니다.");
+        }
+
+        return postList;
+    }
+
+    public List<JobPost> getAllJobPostByCompanyNo(int companyNo) {
+
+        return null;
     }
 }
