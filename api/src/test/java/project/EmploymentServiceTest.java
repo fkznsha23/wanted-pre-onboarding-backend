@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.TreeMap;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -167,5 +168,24 @@ public class EmploymentServiceTest {
         Throwable ex = assertThrows(RuntimeException.class, () -> service.getJobPostByNo(anyInt()));
 
         assertThat(ex.getMessage()).isEqualTo("해당 채용공고의 상세 페이지는 존재하지 않습니다.");
+    }
+
+    @Test
+    public void 채용공고_검색_성공_테스트() {
+        List<JobPost> list = new ArrayList<>();
+        list.add(postValue);
+        given(repo.findAllByTitleLike(anyString())).willReturn(list);
+
+        List<JobPost> result = service.getJobPostByWord("제목");
+
+        assertThat(list.size()).isEqualTo(result.size());
+        assertThat(list.get(0).getTitle()).isEqualTo(result.get(0).getTitle());
+    }
+
+    @Test
+    public void 채용공고_검색_실패_테스트() {
+        Throwable ex = assertThrows(RuntimeException.class, () -> service.getJobPostByWord(anyString()));
+
+        assertThat(ex.getMessage()).isEqualTo("검색어에 해당하는 채용공고가 존재하지 않습니다.");
     }
 }

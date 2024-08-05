@@ -115,4 +115,9 @@ public class EmploymentService {
         return new JobPostDetail(post.getNo(), post.getTitle(), post.getPosition(), post.getCareer(), post.getDegree(), post.getSalary(), post.getDetail(), post.getEndDate()
                 ,company.getName(), company.getHomePage(), company.getAddress());
     }
+
+    public List<JobPost> getJobPostByWord(String word) {
+
+        return null;
+    }
 }

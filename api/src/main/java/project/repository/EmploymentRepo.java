@@ -9,4 +9,6 @@ public interface EmploymentRepo extends JpaRepository<JobPost, Integer> {
     JobPost deleteByNo(int no);
 
     List<JobPost> findAllByNo(int companyNo);
+
+    List<JobPost> findAllByTitleLike(String word);
 }
