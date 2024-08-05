@@ -150,4 +150,21 @@ public class EmploymentServiceTest {
 
         assertThat(ex.getMessage()).isEqualTo("조회된 채용공고가 존재하지 않습니다.");
     }
+
+    @Test
+    public void 채용공고_상세페이지_조회_성공_테스트() {
+        given(repo.getJobPostByNo(anyInt())).willReturn(postValue);
+
+        JobPost result = service.getJobPostByNo(1);
+
+        verify(repo, times(1)).findById(anyInt());
+        assertThat(result.getTitle()).isEqualTo(postValue.getTitle());
+    }
+
+    @Test
+    public void 채용공고_상세페이지_조회_실패_테스트() {
+        Throwable ex = assertThrows(RuntimeException.class, () -> service.getJobPostByNo(anyInt()));
+
+        assertThat(ex.getMessage()).isEqualTo("해당 채용공고의 상세 페이지는 존재하지 않습니다.");
+    }
 }

@@ -4,6 +4,7 @@ import entity.Company;
 import entity.JobPost;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import project.dto.JobPostDetail;
 import project.dto.JobPostForm;
 import project.dto.JobPostModifyForm;
 import project.dto.JobSimplePost;
@@ -74,8 +75,7 @@ public class EmploymentService {
     }
 
     public List<JobPost> getAllJobPostByCompanyNo(int companyNo) {
-
-        return null;
+        return employmentRepo.findAllByNo(companyNo);
     }
 
     public List<CompletableFuture<JobSimplePost>> changeSimplePost(List<JobPost> postList) {
@@ -97,5 +97,11 @@ public class EmploymentService {
     public CompletableFuture<List<JobSimplePost>> changeAsync(List<CompletableFuture<JobSimplePost>> complList) {
         CompletableFuture<?>[] complArray = complList.toArray(new CompletableFuture[0]);
         return CompletableFuture.allOf(complArray).thenApply(i -> complList.stream().map(CompletableFuture::join).collect(Collectors.toList()));
+    }
+
+
+    public JobPost getJobPostByNo(int no) {
+
+        return null;
     }
 }
