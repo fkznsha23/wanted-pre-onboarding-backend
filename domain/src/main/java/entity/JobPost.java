@@ -1,7 +1,6 @@
 package entity;
 
 import inter.Post;
-import inter.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
